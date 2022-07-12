@@ -3,6 +3,7 @@ import UIKit
 class ViewController: UIViewController {
 
     let allowedCharacters = AllowedCharacters().array
+
     @IBOutlet weak var button: UIButton!
     
     var isBlack: Bool = false {
@@ -34,8 +35,6 @@ var newPassword = ""
 //        generatePassword()
 //bruteForce(passwordToUnlock: "1!gr")
         bruteForce(passwordToUnlock: generatePassword())
-
-
     }
 
     func generatePassword() -> String {
