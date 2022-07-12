@@ -2,6 +2,7 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    
     let queue = OperationQueue()
    let allowedCharacters = AllowedCharacters.array
 
@@ -21,19 +22,28 @@ class ViewController: UIViewController {
     @IBOutlet weak var passwordTextField: UITextField!
 
     @IBAction func startButton(_ sender: Any) {
+
         newPassword = generatePassword()
+        passwordLabel.text = "XXX"
+        passwordTextField.isSecureTextEntry = true
         passwordTextField.text = newPassword
         let bruteForce = BruteForce(passwordToUnlock: newPassword)
-    
+        bruteForce.delegate = self
         queue.addOperation(bruteForce)
-showPassword()
+        
+//            showPassword()
+
+
 //        bruteForce.bruteForce()
 //        bruteForce(passwordToUnlock: newPassword)
 
     }
 
-    func showPassword() {
-        passwordLabel.text = newPassword
+    func showPasswordLabel(_ password: String) {
+        passwordLabel.text = password
+    }
+
+    func showTextFieldPassword() {
         passwordTextField.isSecureTextEntry = false
     }
 
@@ -46,6 +56,7 @@ showPassword()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
 //       newPassword = generatePassword()
         //bruteForce(passwordToUnlock: "1!gr")
         passwordTextField.text = newPassword
@@ -122,3 +133,10 @@ showPassword()
 //    return str
 //}
 //
+
+protocol ShowPasswordProtocol {
+    func showPasswordLabel(_ password: String)
+    func showTextFieldPassword()
+}
+
+extension ViewController: ShowPasswordProtocol {}
