@@ -2,7 +2,8 @@ import UIKit
 
 class ViewController: UIViewController {
 
-    let allowedCharacters = AllowedCharacters().array
+    let queue = OperationQueue()
+   let allowedCharacters = AllowedCharacters.array
 
     @IBOutlet weak var button: UIButton!
     
@@ -20,7 +21,18 @@ class ViewController: UIViewController {
     @IBOutlet weak var passwordTextField: UITextField!
 
     @IBAction func startButton(_ sender: Any) {
-        bruteForce(passwordToUnlock: newPassword)
+        newPassword = generatePassword()
+        passwordTextField.text = newPassword
+        let bruteForce = BruteForce(passwordToUnlock: newPassword)
+    
+        queue.addOperation(bruteForce)
+showPassword()
+//        bruteForce.bruteForce()
+//        bruteForce(passwordToUnlock: newPassword)
+
+    }
+
+    func showPassword() {
         passwordLabel.text = newPassword
         passwordTextField.isSecureTextEntry = false
     }
@@ -30,15 +42,14 @@ class ViewController: UIViewController {
         isBlack.toggle()
     }
 
-    var newPassword = ""
+    var newPassword = "1dr"
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        newPassword = generatePassword()
+//       newPassword = generatePassword()
         //bruteForce(passwordToUnlock: "1!gr")
         passwordTextField.text = newPassword
-//        bruteForce(passwordToUnlock: newPassword)
-//        passwordTextField.isSecureTextEntry = false
+
     }
 
     func generatePassword() -> String {
@@ -47,25 +58,24 @@ class ViewController: UIViewController {
             let character = allowedCharacters[Int.random(in: 0...allowedCharacters.count - 1)]
             password += character
         }
-        print(password)
         return password
     }
 
-    func bruteForce(passwordToUnlock: String) {
-        //        let ALLOWED_CHARACTERS:[String] = String().printable.map { String($0) }
-
-        var password: String = ""
-
-        // Will strangely ends at 0000 instead of ~~~
-        while password != passwordToUnlock { // Increase MAXIMUM_PASSWORD_SIZE value for more
-            password = generateBruteForce(password, fromArray: allowedCharacters)
-            //             Your stuff here
-            print("\(password) ____ \(newPassword)")
-            // Your stuff here
-        }
-        
-        print(password)
-    }
+//    func bruteForce(passwordToUnlock: String) {
+//        //        let ALLOWED_CHARACTERS:[String] = String().printable.map { String($0) }
+//
+//        var password: String = ""
+//
+//        // Will strangely ends at 0000 instead of ~~~
+//        while password != passwordToUnlock { // Increase MAXIMUM_PASSWORD_SIZE value for more
+//            password = generateBruteForce(password, fromArray: allowedCharacters)
+//            //             Your stuff here
+//            print("\(password) ____ \(newPassword)")
+//            // Your stuff here
+//        }
+//
+//        print(password)
+//    }
 }
 
 //extension String {
@@ -85,30 +95,30 @@ class ViewController: UIViewController {
 //    }
 //}
 
-func indexOf(character: Character, _ array: [String]) -> Int {
-    return array.firstIndex(of: String(character))!
-}
-
-func characterAt(index: Int, _ array: [String]) -> Character {
-    return index < array.count ? Character(array[index])
-    : Character("")
-}
-
-func generateBruteForce(_ string: String, fromArray array: [String]) -> String {
-    var str: String = string
-
-    if str.count <= 0 {
-        str.append(characterAt(index: 0, array))
-    }
-    else {
-        str.replace(at: str.count - 1,
-                    with: characterAt(index: (indexOf(character: str.last!, array) + 1) % array.count, array))
-
-        if indexOf(character: str.last!, array) == 0 {
-            str = String(generateBruteForce(String(str.dropLast()), fromArray: array)) + String(str.last!)
-        }
-    }
-
-    return str
-}
-
+//func indexOf(character: Character, _ array: [String]) -> Int {
+//    return array.firstIndex(of: String(character))!
+//}
+//
+//func characterAt(index: Int, _ array: [String]) -> Character {
+//    return index < array.count ? Character(array[index])
+//    : Character("")
+//}
+//
+//func generateBruteForce(_ string: String, fromArray array: [String]) -> String {
+//    var str: String = string
+//
+//    if str.count <= 0 {
+//        str.append(characterAt(index: 0, array))
+//    }
+//    else {
+//        str.replace(at: str.count - 1,
+//                    with: characterAt(index: (indexOf(character: str.last!, array) + 1) % array.count, array))
+//
+//        if indexOf(character: str.last!, array) == 0 {
+//            str = String(generateBruteForce(String(str.dropLast()), fromArray: array)) + String(str.last!)
+//        }
+//    }
+//
+//    return str
+//}
+//

@@ -1,11 +1,15 @@
 //
-//  Model.swift
+//  AllowedCharacters.swift
 //  iOS6-HW21-DmitryDorodniy
 //
 //  Created by Dmitry Dorodniy on 11.07.2022.
 //
 
 import Foundation
+
+struct AllowedCharacters {
+    static let array: [String] = String().printable.map { String($0) }
+}
 
 extension String {
     var digits:      String { return "0123456789" }
@@ -22,6 +26,3 @@ extension String {
     }
 }
 
-struct AllowedCharacters {
-    let array: [String] = String().printable.map { String($0) }
-}
