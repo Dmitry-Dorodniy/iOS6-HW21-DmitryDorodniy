@@ -19,6 +19,13 @@ extension String {
     var letters:     String { return lowercase + uppercase }
     var printable:   String { return digits + letters + punctuation }
 
+    var containsValidCharacter: Bool {
+        guard self != "" else { return true }
+        let printableSet = CharacterSet(charactersIn: printable)
+        let newSet = CharacterSet(charactersIn: self)
+        return printableSet.isSuperset(of: newSet)
+    }
+
     mutating func replace(at index: Int, with character: Character) {
         var stringArray = Array(self)
         stringArray[index] = character

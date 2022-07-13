@@ -7,6 +7,8 @@ class ViewController: UIViewController {
     let queue = OperationQueue()
     let allowedCharacters = AllowedCharacters.array
 
+    // MARK: - Set UI elements
+
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
 
     @IBOutlet weak var emojiButton: UIButton!
@@ -16,30 +18,35 @@ class ViewController: UIViewController {
     @IBOutlet weak var passwordTextField: UITextField!
 
     @IBAction func startButton(_ sender: Any) {
+        guard !bruteForce.isExecuting else { bruteForce.cancel()
+            return }
+//      newPassword = generatePassword()
+//      passwordTextField.text = newPassword
 
-        if bruteForce.isExecuting {
-            bruteForce.cancel()
+        newPassword = passwordTextField.text ?? ""
+        guard checkPassword(newPassword) else {
+            alert(with: newPassword)
             return
         }
-
-//       newPassword = generatePassword()
-//      passwordTextField.text = newPassword
-        newPassword = passwordTextField.text ?? ""
         bruteForce = BruteForce(passwordToUnlock: newPassword)
         bruteForce.delegate = self
         queue.addOperation(bruteForce)
         activityIndicator.startAnimating()
     }
 
-
     @IBAction func emojiButton(_ sender: Any) {
         emojiButton.setTitle(generateEmoji(), for: .normal)
     }
 
-    // MARK: - Lifecycle
-    override func viewDidLoad() {
-        super.viewDidLoad()
-//        passwordTextField.text = newPassword
+    func checkPassword(_ text: String) -> Bool {
+        return text.containsValidCharacter
+    }
+
+    func alert(with newPassword: String) {
+        let alert = UIAlertController(title: "\(newPassword) - incorrect", message: "INPUT ONLY: \(String().printable)", preferredStyle: .alert)
+        let okButton = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alert.addAction(okButton)
+        present(alert, animated: true, completion: { self.passwordTextField.text = "" })
     }
 
     func generateEmoji() -> String {
@@ -77,7 +84,6 @@ extension ViewController: ShowPasswordProtocol {
     func stopActivityIndicator() {
         activityIndicator.stopAnimating()
     }
-
 }
 
 // MARK: - TextField Delegate - limitation of text characters
@@ -98,4 +104,6 @@ extension ViewController: UITextFieldDelegate {
                               newText: string,
                               limit: Metric.characterLimit)
     }
+
+    
 }
