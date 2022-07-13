@@ -10,19 +10,25 @@ class ViewController: UIViewController {
     // MARK: - Set UI elements
 
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
-
     @IBOutlet weak var emojiButton: UIButton!
-
     @IBOutlet weak var passwordLabel: UILabel!
-
     @IBOutlet weak var passwordTextField: UITextField!
 
     @IBAction func startButton(_ sender: Any) {
+        startHacking()
+    }
+
+    @IBAction func emojiButton(_ sender: Any) {
+        emojiButton.setTitle(generateEmoji(), for: .normal)
+    }
+
+    // MARK: - Functions
+
+    func startHacking() {
         guard !bruteForce.isExecuting else { bruteForce.cancel()
             return }
-//      newPassword = generatePassword()
-//      passwordTextField.text = newPassword
-
+        //      newPassword = generatePassword()
+        //      passwordTextField.text = newPassword
         newPassword = passwordTextField.text ?? ""
         guard checkPassword(newPassword) else {
             alert(with: newPassword)
@@ -34,17 +40,15 @@ class ViewController: UIViewController {
         activityIndicator.startAnimating()
     }
 
-    @IBAction func emojiButton(_ sender: Any) {
-        emojiButton.setTitle(generateEmoji(), for: .normal)
-    }
-
     func checkPassword(_ text: String) -> Bool {
         return text.containsValidCharacter
     }
 
     func alert(with newPassword: String) {
-        let alert = UIAlertController(title: "\(newPassword) - incorrect", message: "INPUT ONLY: \(String().printable)", preferredStyle: .alert)
-        let okButton = UIAlertAction(title: "OK", style: .default, handler: nil)
+        let alert = UIAlertController(title: "\(newPassword) - incorrect",
+                                      message: "INPUT ONLY: \(String().printable)",
+                                      preferredStyle: .alert)
+        let okButton = UIAlertAction(title: "OK", style: .destructive, handler: nil)
         alert.addAction(okButton)
         present(alert, animated: true, completion: { self.passwordTextField.text = "" })
     }
@@ -53,7 +57,7 @@ class ViewController: UIViewController {
         return String(UnicodeScalar(Array(0x1F300...0x1F3F0).randomElement()!)!)
     }
 
-//    Generate password
+    //    Generate password -- not used --
     func generatePassword() -> String {
         var password = String()
         for _ in 1...Metric.characterLimit {
@@ -64,7 +68,8 @@ class ViewController: UIViewController {
     }
 }
 
-// MARK: - Brut force delegate function
+// MARK: - Brut force delegate functions
+
 protocol ShowPasswordProtocol {
     func showPasswordLabel(_ password: String)
     func showTextFieldPassword()
@@ -86,7 +91,7 @@ extension ViewController: ShowPasswordProtocol {
     }
 }
 
-// MARK: - TextField Delegate - limitation of text characters
+// MARK: - TextField Delegate - limitation of text characters, return action
 extension ViewController: UITextFieldDelegate {
     private func textLimit(existingText: String?,
                            newText: String,
@@ -105,5 +110,9 @@ extension ViewController: UITextFieldDelegate {
                               limit: Metric.characterLimit)
     }
 
-    
+    //start by keyboard Return pressed
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        startHacking()
+        return true
+    }
 }

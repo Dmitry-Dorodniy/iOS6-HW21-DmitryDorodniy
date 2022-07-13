@@ -28,15 +28,15 @@
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="50"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="input 3 characters" textAlignment="center" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="q82-UU-n6O">
-                                <rect key="frame" x="76.5" y="195" width="261" height="45.5"/>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="***" textAlignment="center" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="q82-UU-n6O">
+                                <rect key="frame" x="157" y="195" width="100" height="45.5"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="45.5" id="Xld-iB-YfC"/>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="cHe-ye-Xbd"/>
                                     <constraint firstAttribute="height" constant="45.5" id="u1X-k1-394"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="30"/>
-                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="go" secureTextEntry="YES"/>
                                 <connections>
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="Awg-q1-bKB"/>
                                 </connections>
