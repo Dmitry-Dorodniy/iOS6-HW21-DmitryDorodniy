@@ -17,7 +17,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="●●●" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a0S-wa-gT3">
-                                <rect key="frame" x="138.5" y="94" width="137" height="51"/>
+                                <rect key="frame" x="135" y="94" width="144" height="51"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="137" id="0fh-ms-78D"/>
@@ -25,34 +25,32 @@
                                     <constraint firstAttribute="height" constant="51" id="KUd-8L-8G4"/>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="51" id="eIc-gF-Pj4"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="50"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="PASSWORD" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="q82-UU-n6O">
-                                <rect key="frame" x="112.5" y="195" width="189" height="45.5"/>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="input 3 characters" textAlignment="center" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="q82-UU-n6O">
+                                <rect key="frame" x="76.5" y="195" width="261" height="45.5"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="45.5" id="Xld-iB-YfC"/>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="137" id="cHe-ye-Xbd"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="cHe-ye-Xbd"/>
                                     <constraint firstAttribute="height" constant="45.5" id="u1X-k1-394"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="30"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                 <connections>
-                                    <outlet property="delegate" destination="BYZ-38-t0r" id="c1i-Hq-o2G"/>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="Awg-q1-bKB"/>
                                 </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pKb-3r-n0x">
-                                <rect key="frame" x="112" y="372" width="190" height="66"/>
+                                <rect key="frame" x="112" y="362" width="190" height="55"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="190" id="0Q2-X2-xsP"/>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="190" id="3c5-tH-XOE"/>
-                                    <constraint firstAttribute="height" relation="lessThanOrEqual" constant="66" id="M5d-lM-KmT"/>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="66" id="YvW-PC-Seo"/>
-                                    <constraint firstAttribute="height" relation="lessThanOrEqual" constant="66" id="pc3-Hy-347"/>
-                                    <constraint firstAttribute="height" constant="66" id="pk6-5N-p3y"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="55" id="YvW-PC-Seo"/>
                                 </constraints>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="filled" title="GENERATE" cornerStyle="medium"/>
+                                <buttonConfiguration key="configuration" style="filled" title="HACKING" cornerStyle="medium">
+                                    <color key="baseBackgroundColor" systemColor="systemTealColor"/>
+                                </buttonConfiguration>
                                 <connections>
                                     <action selector="startButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="f4h-Kt-Mco"/>
                                 </connections>
@@ -69,7 +67,7 @@
                                 </connections>
                             </button>
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="s0o-uL-aTN">
-                                <rect key="frame" x="282" y="109" width="20" height="21"/>
+                                <rect key="frame" x="285.5" y="109" width="20" height="21"/>
                             </activityIndicatorView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -80,7 +78,7 @@
                             <constraint firstItem="q82-UU-n6O" firstAttribute="top" secondItem="a0S-wa-gT3" secondAttribute="bottom" constant="50" id="JpV-dp-0cj"/>
                             <constraint firstItem="pKb-3r-n0x" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="XZK-mF-ufj"/>
                             <constraint firstItem="s0o-uL-aTN" firstAttribute="centerY" secondItem="a0S-wa-gT3" secondAttribute="centerY" id="a3c-O1-e82"/>
-                            <constraint firstItem="pKb-3r-n0x" firstAttribute="top" secondItem="3g4-cd-RKK" secondAttribute="bottom" constant="55" id="igm-Xb-i5A"/>
+                            <constraint firstItem="pKb-3r-n0x" firstAttribute="top" secondItem="3g4-cd-RKK" secondAttribute="bottom" constant="45" id="igm-Xb-i5A"/>
                             <constraint firstItem="q82-UU-n6O" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="qeu-W4-P8m"/>
                             <constraint firstItem="s0o-uL-aTN" firstAttribute="leading" secondItem="a0S-wa-gT3" secondAttribute="trailing" constant="6.5" id="rn4-oJ-yAW"/>
                             <constraint firstItem="a0S-wa-gT3" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="50" id="uzu-62-QxN"/>
@@ -103,6 +101,9 @@
     <resources>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemTealColor">
+            <color red="0.18823529411764706" green="0.69019607843137254" blue="0.7803921568627451" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

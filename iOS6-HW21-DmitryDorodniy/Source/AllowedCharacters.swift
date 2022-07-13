@@ -26,3 +26,6 @@ extension String {
     }
 }
 
+enum Metric {
+    static let characterLimit: Int = 3
+}

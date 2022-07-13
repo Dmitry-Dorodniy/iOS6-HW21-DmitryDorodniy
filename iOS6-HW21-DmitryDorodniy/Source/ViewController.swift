@@ -4,7 +4,6 @@ class ViewController: UIViewController {
 
     var newPassword = ""
     var bruteForce = BruteForce(passwordToUnlock: "")
-    var isStarted = false
     let queue = OperationQueue()
     let allowedCharacters = AllowedCharacters.array
 
@@ -18,15 +17,12 @@ class ViewController: UIViewController {
 
     @IBAction func startButton(_ sender: Any) {
 
-        isStarted.toggle()
         if bruteForce.isExecuting {
             bruteForce.cancel()
             return
         }
-//       newPassword = generatePassword()
 
-//        passwordLabel.text = "●●●"
-//        passwordTextField.isSecureTextEntry = true
+//       newPassword = generatePassword()
 //      passwordTextField.text = newPassword
         newPassword = passwordTextField.text ?? ""
         bruteForce = BruteForce(passwordToUnlock: newPassword)
@@ -35,19 +31,6 @@ class ViewController: UIViewController {
         activityIndicator.startAnimating()
     }
 
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        // get the current text, or use an empty string if that failed
-        let currentText = textField.text ?? ""
-
-        // attempt to read the range they are trying to change, or exit if we can't
-        guard let stringRange = Range(range, in: currentText) else { return false }
-
-        // add their new text to the existing text
-        let updatedText = currentText.replacingCharacters(in: stringRange, with: string)
-
-        // make sure the result is under 16 characters
-        return updatedText.count <= 3
-    }
 
     @IBAction func emojiButton(_ sender: Any) {
         emojiButton.setTitle(generateEmoji(), for: .normal)
@@ -56,9 +39,32 @@ class ViewController: UIViewController {
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        passwordTextField.text = newPassword
+//        passwordTextField.text = newPassword
     }
 
+    func generateEmoji() -> String {
+        return String(UnicodeScalar(Array(0x1F300...0x1F3F0).randomElement()!)!)
+    }
+
+//    Generate password
+    func generatePassword() -> String {
+        var password = String()
+        for _ in 1...Metric.characterLimit {
+            let character = allowedCharacters[Int.random(in: 0...allowedCharacters.count - 1)]
+            password += character
+        }
+        return password
+    }
+}
+
+// MARK: - Brut force delegate function
+protocol ShowPasswordProtocol {
+    func showPasswordLabel(_ password: String)
+    func showTextFieldPassword()
+    func stopActivityIndicator()
+}
+
+extension ViewController: ShowPasswordProtocol {
 
     func showPasswordLabel(_ password: String) {
         passwordLabel.text = password
@@ -72,24 +78,24 @@ class ViewController: UIViewController {
         activityIndicator.stopAnimating()
     }
 
-    func generateEmoji() -> String {
-        return String(UnicodeScalar(Array(0x1F300...0x1F3F0).randomElement()!)!)
-    }
-
-    func generatePassword() -> String {
-        var password = String()
-        for _ in 1...3 {
-            let character = allowedCharacters[Int.random(in: 0...allowedCharacters.count - 1)]
-            password += character
-        }
-        return password
-    }
 }
 
-protocol ShowPasswordProtocol {
-    func showPasswordLabel(_ password: String)
-    func showTextFieldPassword()
-    func stopActivityIndicator()
-}
+// MARK: - TextField Delegate - limitation of text characters
+extension ViewController: UITextFieldDelegate {
+    private func textLimit(existingText: String?,
+                           newText: String,
+                           limit: Int) -> Bool {
+        let text = existingText ?? ""
+        let isAtLimit = text.count + newText.count <= limit
+        return isAtLimit
+    }
 
-extension ViewController: ShowPasswordProtocol {}
+    func textField(_ textField: UITextField,
+                   shouldChangeCharactersIn range: NSRange,
+                   replacementString string: String) -> Bool {
+        textField.isSecureTextEntry = true
+        return self.textLimit(existingText: textField.text,
+                              newText: string,
+                              limit: Metric.characterLimit)
+    }
+}
