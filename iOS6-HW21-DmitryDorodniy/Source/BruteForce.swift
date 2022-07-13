@@ -39,6 +39,7 @@ class BruteForce: Operation {
         }
         DispatchQueue.main.sync {
             self.delegate?.showTextFieldPassword()
+            self.delegate?.stopActivityIndicator()
         }
     }
 

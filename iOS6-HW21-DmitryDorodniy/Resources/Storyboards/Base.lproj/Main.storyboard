@@ -65,6 +65,9 @@
                                     <action selector="onBut:" destination="BYZ-38-t0r" eventType="touchUpInside" id="XD4-sb-XPE"/>
                                 </connections>
                             </button>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="s0o-uL-aTN">
+                                <rect key="frame" x="282" y="109" width="20" height="21"/>
+                            </activityIndicatorView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -73,13 +76,17 @@
                             <constraint firstItem="3g4-cd-RKK" firstAttribute="top" secondItem="q82-UU-n6O" secondAttribute="bottom" constant="28.5" id="708-4r-M8t"/>
                             <constraint firstItem="q82-UU-n6O" firstAttribute="top" secondItem="a0S-wa-gT3" secondAttribute="bottom" constant="50" id="JpV-dp-0cj"/>
                             <constraint firstItem="pKb-3r-n0x" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="XZK-mF-ufj"/>
+                            <constraint firstItem="s0o-uL-aTN" firstAttribute="centerY" secondItem="a0S-wa-gT3" secondAttribute="centerY" id="a3c-O1-e82"/>
                             <constraint firstItem="pKb-3r-n0x" firstAttribute="top" secondItem="3g4-cd-RKK" secondAttribute="bottom" constant="55" id="igm-Xb-i5A"/>
                             <constraint firstItem="q82-UU-n6O" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="qeu-W4-P8m"/>
+                            <constraint firstItem="s0o-uL-aTN" firstAttribute="leading" secondItem="a0S-wa-gT3" secondAttribute="trailing" constant="6.5" id="rn4-oJ-yAW"/>
                             <constraint firstItem="a0S-wa-gT3" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="50" id="uzu-62-QxN"/>
+                            <constraint firstItem="s0o-uL-aTN" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="65" id="xvR-8K-IB1"/>
                             <constraint firstItem="3g4-cd-RKK" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="yfq-wA-6fm"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="activityIndicator" destination="s0o-uL-aTN" id="Rgy-jh-aLP"/>
                         <outlet property="button" destination="3g4-cd-RKK" id="yGm-KB-boF"/>
                         <outlet property="passwordLabel" destination="a0S-wa-gT3" id="zMr-mT-9RH"/>
                         <outlet property="passwordTextField" destination="q82-UU-n6O" id="KMQ-Rp-VMP"/>

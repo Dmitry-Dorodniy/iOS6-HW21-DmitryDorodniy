@@ -2,9 +2,11 @@ import UIKit
 
 class ViewController: UIViewController {
 
-    
+    var isStarted = false
     let queue = OperationQueue()
    let allowedCharacters = AllowedCharacters.array
+
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
 
     @IBOutlet weak var button: UIButton!
     
@@ -29,6 +31,7 @@ class ViewController: UIViewController {
         passwordTextField.text = newPassword
         let bruteForce = BruteForce(passwordToUnlock: newPassword)
         bruteForce.delegate = self
+        activityIndicator.startAnimating()
         queue.addOperation(bruteForce)
         
 //            showPassword()
@@ -45,6 +48,10 @@ class ViewController: UIViewController {
 
     func showTextFieldPassword() {
         passwordTextField.isSecureTextEntry = false
+    }
+
+    func stopActivityIndicator() {
+        activityIndicator.stopAnimating()
     }
 
 
@@ -137,6 +144,7 @@ class ViewController: UIViewController {
 protocol ShowPasswordProtocol {
     func showPasswordLabel(_ password: String)
     func showTextFieldPassword()
+    func stopActivityIndicator()
 }
 
 extension ViewController: ShowPasswordProtocol {}
