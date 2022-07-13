@@ -2,23 +2,15 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    var newPassword = "1dr"
     var isStarted = false
     let queue = OperationQueue()
-   let allowedCharacters = AllowedCharacters.array
+    let allowedCharacters = AllowedCharacters.array
 
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
 
-    @IBOutlet weak var button: UIButton!
-    
-    var isBlack: Bool = false {
-        didSet {
-            if isBlack {
-                self.view.backgroundColor = .black
-            } else {
-                self.view.backgroundColor = .white
-            }
-        }
-    }
+    @IBOutlet weak var emojiButton: UIButton!
+
     @IBOutlet weak var passwordLabel: UILabel!
 
     @IBOutlet weak var passwordTextField: UITextField!
@@ -33,14 +25,18 @@ class ViewController: UIViewController {
         bruteForce.delegate = self
         activityIndicator.startAnimating()
         queue.addOperation(bruteForce)
-        
-//            showPassword()
-
-
-//        bruteForce.bruteForce()
-//        bruteForce(passwordToUnlock: newPassword)
-
     }
+
+    @IBAction func emojiButton(_ sender: Any) {
+        emojiButton.setTitle(generateEmoji(), for: .normal)
+    }
+
+    // MARK: - Lifecycle
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        passwordTextField.text = newPassword
+    }
+
 
     func showPasswordLabel(_ password: String) {
         passwordLabel.text = password
@@ -54,20 +50,8 @@ class ViewController: UIViewController {
         activityIndicator.stopAnimating()
     }
 
-
-    @IBAction func onBut(_ sender: Any) {
-        isBlack.toggle()
-    }
-
-    var newPassword = "1dr"
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-//       newPassword = generatePassword()
-        //bruteForce(passwordToUnlock: "1!gr")
-        passwordTextField.text = newPassword
-
+    func generateEmoji() -> String {
+        return String(UnicodeScalar(Array(0x1F300...0x1F3F0).randomElement()!)!)
     }
 
     func generatePassword() -> String {
@@ -79,21 +63,21 @@ class ViewController: UIViewController {
         return password
     }
 
-//    func bruteForce(passwordToUnlock: String) {
-//        //        let ALLOWED_CHARACTERS:[String] = String().printable.map { String($0) }
-//
-//        var password: String = ""
-//
-//        // Will strangely ends at 0000 instead of ~~~
-//        while password != passwordToUnlock { // Increase MAXIMUM_PASSWORD_SIZE value for more
-//            password = generateBruteForce(password, fromArray: allowedCharacters)
-//            //             Your stuff here
-//            print("\(password) ____ \(newPassword)")
-//            // Your stuff here
-//        }
-//
-//        print(password)
-//    }
+    //    func bruteForce(passwordToUnlock: String) {
+    //        //        let ALLOWED_CHARACTERS:[String] = String().printable.map { String($0) }
+    //
+    //        var password: String = ""
+    //
+    //        // Will strangely ends at 0000 instead of ~~~
+    //        while password != passwordToUnlock { // Increase MAXIMUM_PASSWORD_SIZE value for more
+    //            password = generateBruteForce(password, fromArray: allowedCharacters)
+    //            //             Your stuff here
+    //            print("\(password) ____ \(newPassword)")
+    //            // Your stuff here
+    //        }
+    //
+    //        print(password)
+    //    }
 }
 
 //extension String {
