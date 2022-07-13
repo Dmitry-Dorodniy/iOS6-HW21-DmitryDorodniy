@@ -9,7 +9,7 @@ import Foundation
 
 class BruteForce: Operation {
     var delegate: ShowPasswordProtocol?
-    var passwordToUnlock: String
+    var passwordToUnlock: String = ""
 
     init (passwordToUnlock: String) {
         self.passwordToUnlock = passwordToUnlock
@@ -20,21 +20,22 @@ class BruteForce: Operation {
             return
         }
         bruteForce()
- 
     }
 
     func bruteForce() {
-        //        let ALLOWED_CHARACTERS:[String] = String().printable.map { String($0) }
-
         var password: String = ""
 
-        // Will strangely ends at 0000 instead of ~~~
         while password != passwordToUnlock { // Increase MAXIMUM_PASSWORD_SIZE value for more
             password = generateBruteForce(password, fromArray: AllowedCharacters.array)
-            //             Your stuff here
             print("\(password)")
             DispatchQueue.main.async {
                 self.delegate?.showPasswordLabel(password)
+            }
+            if self.isCancelled {
+                DispatchQueue.main.sync {
+                    self.delegate?.stopActivityIndicator()
+                }
+                return
             }
         }
         DispatchQueue.main.sync {
