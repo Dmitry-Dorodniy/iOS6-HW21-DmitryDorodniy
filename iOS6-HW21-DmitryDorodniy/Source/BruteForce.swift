@@ -33,7 +33,7 @@ class BruteForce: Operation {
             }
             if self.isCancelled {
                 DispatchQueue.main.sync {
-                    self.delegate?.stopActivityIndicator()
+                    self.delegate?.cancelHacking()
                 }
                 return
             }

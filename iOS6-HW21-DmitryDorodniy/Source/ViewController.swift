@@ -50,42 +50,8 @@ class ViewController: UIViewController {
         return text.containsValidCharacter
     }
 
-    func alert(with newPassword: String) {
-        let alert = UIAlertController(title: "\(newPassword) - incorrect",
-                                      message: "INPUT ONLY: \(String().printable)",
-                                      preferredStyle: .alert)
-        let okButton = UIAlertAction(title: "OK", style: .destructive, handler: nil)
-        alert.addAction(okButton)
-        present(alert, animated: true, completion: { self.passwordTextField.text = "" })
-    }
-
     func generateEmoji() -> String {
         return String(UnicodeScalar(Array(0x1F300...0x1F3F0).randomElement()!)!)
-    }
-
-    //    Generate password -- not used --
-    func generatePassword() -> String {
-        var password = String()
-        for _ in 1...Metric.characterLimit {
-            let character = allowedCharacters[Int.random(in: 0...allowedCharacters.count - 1)]
-            password += character
-        }
-        return password
-    }
-}
-
-// MARK: - Brut force delegate functions
-
-protocol ShowPasswordProtocol {
-    func showPasswordLabel(_ password: String)
-    func showTextFieldPassword()
-    func stopActivityIndicator()
-}
-
-extension ViewController: ShowPasswordProtocol {
-
-    func showPasswordLabel(_ password: String) {
-        passwordLabel.text = password
     }
 
     func toggleTextFieldPasswordSecurity() {
@@ -99,6 +65,45 @@ extension ViewController: ShowPasswordProtocol {
         isEyeOpen.toggle()
     }
 
+
+    //    generate password -- not used --
+    //    created fot 1st version, not implemented here
+    func generatePassword() -> String {
+        var password = String()
+        for _ in 1...Metric.characterLimit {
+            let character = allowedCharacters[Int.random(in: 0...allowedCharacters.count - 1)]
+            password += character
+        }
+        return password
+    }
+
+    // alert whet character is not allowed --not used--
+    // use delegate not allowing to input unallowed characters instead
+    func alert(with newPassword: String) {
+        let alert = UIAlertController(title: "\(newPassword) - incorrect",
+                                      message: "INPUT ONLY: \(String().printable)",
+                                      preferredStyle: .alert)
+        let okButton = UIAlertAction(title: "OK", style: .destructive, handler: nil)
+        alert.addAction(okButton)
+        present(alert, animated: true, completion: { self.passwordTextField.text = "" })
+    }
+}
+
+// MARK: - Brut force delegate functions
+
+protocol ShowPasswordProtocol {
+    func showPasswordLabel(_ password: String)
+    func showTextFieldPassword()
+    func stopActivityIndicator()
+    func cancelHacking()
+}
+
+extension ViewController: ShowPasswordProtocol {
+
+    func showPasswordLabel(_ password: String) {
+        passwordLabel.text = password
+    }
+
     func showTextFieldPassword() {
         isEyeOpen = false
         toggleTextFieldPasswordSecurity()
@@ -106,6 +111,11 @@ extension ViewController: ShowPasswordProtocol {
 
     func stopActivityIndicator() {
         activityIndicator.stopAnimating()
+    }
+
+    func cancelHacking() {
+        stopActivityIndicator()
+        passwordLabel.text = "✗✗✗"
     }
 }
 
