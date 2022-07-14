@@ -97,7 +97,8 @@ extension ViewController: UITextFieldDelegate {
                            newText: String,
                            limit: Int) -> Bool {
         let text = existingText ?? ""
-        let isAtLimit = text.count + newText.count <= limit
+        let isAtLimit = text.count + newText.count <= limit && (text + newText).containsValidCharacter
+//        check for character limit and input allowed symbols
         return isAtLimit
     }
 
