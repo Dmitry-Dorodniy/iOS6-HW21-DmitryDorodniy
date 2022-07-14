@@ -6,6 +6,7 @@
 //
 
 import Foundation
+
 enum Constants {
     static let characterLimit: Int = 3
     static let successEmoji: String = "🎉"
