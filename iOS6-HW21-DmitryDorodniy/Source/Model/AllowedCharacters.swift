@@ -32,7 +32,3 @@ extension String {
         self = String(stringArray)
     }
 }
-
-enum Metric {
-    static let characterLimit: Int = 3
-}

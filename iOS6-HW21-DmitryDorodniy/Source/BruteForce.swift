@@ -33,14 +33,15 @@ class BruteForce: Operation {
             }
             if self.isCancelled {
                 DispatchQueue.main.sync {
-                    self.delegate?.stopActivityIndicator()
+                    self.delegate?.cancelHacking()
                 }
                 return
             }
         }
         DispatchQueue.main.sync {
-            self.delegate?.showTextFieldPassword()
-            self.delegate?.stopActivityIndicator()
+            self.delegate?.successHacking()
+//            self.delegate?.showTextFieldPassword()
+//            self.delegate?.stopActivityIndicator()
         }
     }
 
