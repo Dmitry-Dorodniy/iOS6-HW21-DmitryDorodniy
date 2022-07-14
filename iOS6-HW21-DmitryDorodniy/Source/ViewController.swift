@@ -46,8 +46,9 @@ class ViewController: UIViewController {
         activityIndicator.startAnimating()
     }
 
-    func checkPassword(_ text: String) -> Bool {
-        return text.containsValidCharacter
+    func showTextFieldPassword() {
+        isEyeOpen = false
+        toggleTextFieldPasswordSecurity()
     }
 
     func generateEmoji() -> String {
@@ -65,20 +66,23 @@ class ViewController: UIViewController {
         isEyeOpen.toggle()
     }
 
-
     //    generate password -- not used --
     //    created fot 1st version, not implemented here
     func generatePassword() -> String {
         var password = String()
-        for _ in 1...Metric.characterLimit {
+        for _ in 1...Constants.characterLimit {
             let character = allowedCharacters[Int.random(in: 0...allowedCharacters.count - 1)]
             password += character
         }
         return password
     }
 
-    // alert whet character is not allowed --not used--
-    // use delegate not allowing to input unallowed characters instead
+    // check and alert for not allowed character --not used--
+    // use textField delegate that not allowing to input unallowed characters instead
+    func checkPassword(_ text: String) -> Bool {
+        return text.containsValidCharacter
+    }
+
     func alert(with newPassword: String) {
         let alert = UIAlertController(title: "\(newPassword) - incorrect",
                                       message: "INPUT ONLY: \(String().printable)",
@@ -93,8 +97,7 @@ class ViewController: UIViewController {
 
 protocol ShowPasswordProtocol {
     func showPasswordLabel(_ password: String)
-    func showTextFieldPassword()
-    func stopActivityIndicator()
+    func successHacking()
     func cancelHacking()
 }
 
@@ -104,28 +107,26 @@ extension ViewController: ShowPasswordProtocol {
         passwordLabel.text = password
     }
 
-    func showTextFieldPassword() {
-        isEyeOpen = false
-        toggleTextFieldPasswordSecurity()
-    }
-
-    func stopActivityIndicator() {
+    func successHacking() {
         activityIndicator.stopAnimating()
+        showTextFieldPassword()
+        emojiButton.setTitle(Constants.successEmoji, for: .normal)
     }
 
     func cancelHacking() {
-        stopActivityIndicator()
-        passwordLabel.text = "✗✗✗"
+        activityIndicator.stopAnimating()
+        passwordLabel.text = Constants.cancelLabel
+        emojiButton.setTitle(Constants.cancelEmoji, for: .normal)
     }
 }
 
-// MARK: - TextField Delegate - limitation of text characters, return action
+// MARK: - TextField Delegate - limitation of text characters, guard allowed symbols, keyboard action
 extension ViewController: UITextFieldDelegate {
     private func textLimit(existingText: String?,
                            newText: String,
                            limit: Int) -> Bool {
         let text = existingText ?? ""
-        let isAtLimit = text.count + newText.count <= limit && (text + newText).containsValidCharacter
+        let isAtLimit = (text.count + newText.count <= limit) && (text + newText).containsValidCharacter
         //        check for character limit and input allowed symbols
         return isAtLimit
     }
@@ -135,10 +136,10 @@ extension ViewController: UITextFieldDelegate {
                    replacementString string: String) -> Bool {
         return self.textLimit(existingText: textField.text,
                               newText: string,
-                              limit: Metric.characterLimit)
+                              limit: Constants.characterLimit)
     }
 
-    //start by keyboard Return pressed
+    //action by keyboard Return pressed
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         startHacking()
         return true
