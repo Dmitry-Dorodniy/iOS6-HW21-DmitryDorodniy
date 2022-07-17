@@ -7,7 +7,7 @@
 
 import Foundation
 
-class BruteForce: Operation {
+class BruteForceOperation: Operation {
     var delegate: ShowPasswordProtocol?
     var passwordToUnlock: String = ""
 

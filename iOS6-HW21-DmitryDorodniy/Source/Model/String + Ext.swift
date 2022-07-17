@@ -32,3 +32,23 @@ extension String {
         self = String(stringArray)
     }
 }
+
+extension String {
+    /// Random emoji generator
+    /// - Returns: return String with one emoji
+    static func generateEmoji() -> String {
+        return String(UnicodeScalar(Array(0x1F300...0x1F3F0).randomElement()!)!)
+    }
+
+    //    generate password -- not used --
+    //    created fot 1st version, not implemented here
+    static func generatePassword() -> String {
+        var password = String()
+        for _ in 1...Constants.characterLimit {
+            let character = AllowedCharacters.array[Int.random(in: 0...AllowedCharacters.array.count - 1)]
+            password += character
+        }
+        return password
+    }
+
+}
