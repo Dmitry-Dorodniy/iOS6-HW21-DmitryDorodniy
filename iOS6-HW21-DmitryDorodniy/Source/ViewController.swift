@@ -76,8 +76,15 @@ class ViewController: UIViewController {
                                      style: .destructive,
                                      handler: nil)
         alert.addAction(okButton)
+        //вариант с захватом слабой ссылки на ViewController
+//        present(alert, animated: true,
+//                completion: { [weak self] in
+//                self?.passwordTextField.text = "" })
+        //вариант с хахватом только нужного элемента
         present(alert, animated: true,
-                completion: { self.passwordTextField.text = "" })
+                completion: { [passwordTextField] in
+                passwordTextField?.text = "" })
+
     }
 }
 
@@ -107,7 +114,8 @@ extension ViewController: UITextFieldDelegate {
                            newText: String,
                            limit: Int) -> Bool {
         let text = existingText ?? ""
-        let isAtLimit = (text.count + newText.count <= limit) && (text + newText).containsValidCharacter
+        let isAtLimit = (text.count + newText.count <= limit)
+        && (text + newText).containsValidCharacter
         //        check for character limit and input allowed symbols
         return isAtLimit
     }
