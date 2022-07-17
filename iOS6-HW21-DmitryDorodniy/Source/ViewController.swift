@@ -3,9 +3,8 @@ import UIKit
 class ViewController: UIViewController {
 
     var newPassword = ""
-    var bruteForce = BruteForce(passwordToUnlock: "")
+    var bruteForce = BruteForceOperation(passwordToUnlock: "")
     let queue = OperationQueue()
-    let allowedCharacters = AllowedCharacters.array
     var isEyeOpen = false
 
     // MARK: - Set UI elements
@@ -25,22 +24,23 @@ class ViewController: UIViewController {
     }
 
     @IBAction func emojiButton(_ sender: Any) {
-        emojiButton.setTitle(generateEmoji(), for: .normal)
+        emojiButton.setTitle(String.generateEmoji(), for: .normal)
     }
 
     // MARK: - Functions
 
     func startHacking() {
-        guard !bruteForce.isExecuting else { bruteForce.cancel()
+        guard !bruteForce.isExecuting else {
+            bruteForce.cancel()
             return }
-        //      newPassword = generatePassword()
+        //      newPassword = String.generatePassword()
         //      passwordTextField.text = newPassword
         newPassword = passwordTextField.text ?? ""
         guard checkPassword(newPassword) else {
             alert(with: newPassword)
             return
         }
-        bruteForce = BruteForce(passwordToUnlock: newPassword)
+        bruteForce = BruteForceOperation(passwordToUnlock: newPassword)
         bruteForce.delegate = self
         queue.addOperation(bruteForce)
         activityIndicator.startAnimating()
@@ -49,10 +49,6 @@ class ViewController: UIViewController {
     func showTextFieldPassword() {
         isEyeOpen = false
         toggleTextFieldPasswordSecurity()
-    }
-
-    func generateEmoji() -> String {
-        return String(UnicodeScalar(Array(0x1F300...0x1F3F0).randomElement()!)!)
     }
 
     func toggleTextFieldPasswordSecurity() {
@@ -66,17 +62,6 @@ class ViewController: UIViewController {
         isEyeOpen.toggle()
     }
 
-    //    generate password -- not used --
-    //    created fot 1st version, not implemented here
-    func generatePassword() -> String {
-        var password = String()
-        for _ in 1...Constants.characterLimit {
-            let character = allowedCharacters[Int.random(in: 0...allowedCharacters.count - 1)]
-            password += character
-        }
-        return password
-    }
-
     // check and alert for not allowed character --not used--
     // use textField delegate that not allowing to input unallowed characters instead
     func checkPassword(_ text: String) -> Bool {
@@ -87,20 +72,16 @@ class ViewController: UIViewController {
         let alert = UIAlertController(title: "\(newPassword) - incorrect",
                                       message: "INPUT ONLY: \(String().printable)",
                                       preferredStyle: .alert)
-        let okButton = UIAlertAction(title: "OK", style: .destructive, handler: nil)
+        let okButton = UIAlertAction(title: "OK",
+                                     style: .destructive,
+                                     handler: nil)
         alert.addAction(okButton)
-        present(alert, animated: true, completion: { self.passwordTextField.text = "" })
+        present(alert, animated: true,
+                completion: { self.passwordTextField.text = "" })
     }
 }
 
 // MARK: - Brut force delegate functions
-
-protocol ShowPasswordProtocol {
-    func showPasswordLabel(_ password: String)
-    func successHacking()
-    func cancelHacking()
-}
-
 extension ViewController: ShowPasswordProtocol {
 
     func showPasswordLabel(_ password: String) {
